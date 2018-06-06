@@ -1,28 +1,34 @@
 <script>
 export default {
-    vuex: {
-        getters: {
-            user: ({ user }) => user,
-            session: ({ sessions, currentSessionId }) => sessions.find(session => session.id === currentSessionId)
-        }
-    },
-    filters: {
-        // 将日期过滤为 hour:minutes
-        time (date) {
-            if (typeof date === 'string') {
-                date = new Date(date);
-            }
-            return date.getHours() + ':' + date.getMinutes();
-        }
-    },
-    directives: {
-        // 发送消息后滚动到底部
-        'scroll-bottom' () {
-            this.vm.$nextTick(() => {
-                this.el.scrollTop = this.el.scrollHeight - this.el.clientHeight;
-            });
-        }
+  vuex: {
+    getters: {
+      user: ({ user }) => user,
+      session: ({ sessions, currentSessionId }) =>
+        sessions.find(session => session.id === currentSessionId)
     }
+  },
+  filters: {
+    // 将日期过滤为 hour:minutes
+    time(date) {
+      if (typeof date === "string") {
+        date = new Date(date);
+      }
+      // console.log(String(date.getMinutes()).length);
+      return (
+        ("00" + date.getHours()).substr(String(date.getHours()).length) +
+        ":" +
+        ("00" + date.getMinutes()).substr(String(date.getMinutes()).length)
+      );
+    },
+  },
+  directives: {
+    // 发送消息后滚动到底部
+    "scroll-bottom"() {
+      this.vm.$nextTick(() => {
+        this.el.scrollTop = this.el.scrollHeight - this.el.clientHeight;
+      });
+    }
+  }
 };
 </script>
 
@@ -44,70 +50,70 @@ export default {
 
 <style lang="less" scoped>
 .message {
-    padding: 10px 15px;
-    overflow-y: scroll;
+  padding: 10px 15px;
+  overflow-y: scroll;
 
-    li {
-        margin-bottom: 15px;
-    }
-    .time {
-        margin: 7px 0;
-        text-align: center;
+  li {
+    margin-bottom: 15px;
+  }
+  .time {
+    margin: 7px 0;
+    text-align: center;
 
-        > span {
-            display: inline-block;
-            padding: 0 18px;
-            font-size: 12px;
-            color: #fff;
-            border-radius: 2px;
-            background-color: #dcdcdc;
-        }
+    > span {
+      display: inline-block;
+      padding: 0 18px;
+      font-size: 12px;
+      color: #fff;
+      border-radius: 2px;
+      background-color: #dcdcdc;
     }
+  }
+  .avatar {
+    float: left;
+    margin: 0 10px 0 0;
+    border-radius: 3px;
+  }
+  .text {
+    display: inline-block;
+    position: relative;
+    padding: 0 10px;
+    max-width: ~"calc(100% - 40px)";
+    min-height: 30px;
+    line-height: 2.5;
+    font-size: 12px;
+    text-align: left;
+    word-break: break-all;
+    background-color: #fafafa;
+    border-radius: 4px;
+
+    &:before {
+      content: " ";
+      position: absolute;
+      top: 9px;
+      right: 100%;
+      border: 6px solid transparent;
+      border-right-color: #fafafa;
+    }
+  }
+
+  .self {
+    text-align: right;
+
     .avatar {
-        float: left;
-        margin: 0 10px 0 0;
-        border-radius: 3px;
+      float: right;
+      margin: 0 0 0 10px;
     }
     .text {
-        display: inline-block;
-        position: relative;
-        padding: 0 10px;
-        max-width: ~'calc(100% - 40px)';
-        min-height: 30px;
-        line-height: 2.5;
-        font-size: 12px;
-        text-align: left;
-        word-break: break-all;
-        background-color: #fafafa;
-        border-radius: 4px;
+      background-color: #b2e281;
 
-        &:before {
-            content: " ";
-            position: absolute;
-            top: 9px;
-            right: 100%;
-            border: 6px solid transparent;
-            border-right-color: #fafafa;
-        }
+      &:before {
+        right: inherit;
+        left: 100%;
+        border-right-color: transparent;
+        border-left-color: #b2e281;
+      }
     }
-
-    .self {
-        text-align: right;
-
-        .avatar {
-            float: right;
-            margin: 0 0 0 10px;
-        }
-        .text {
-            background-color: #b2e281;
-
-            &:before {
-                right: inherit;
-                left: 100%;
-                border-right-color: transparent;
-                border-left-color: #b2e281;
-            }
-        }
-    }
+  }
 }
 </style>
